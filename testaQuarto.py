@@ -39,17 +39,21 @@ class TestaQuarto(unittest.TestCase):
 		self.q.buscarQuarto(self.q, 203) |should| equal_to(self.q.lista[0])
 		self.q.buscarQuarto(self.q, 301) |should| equal_to(self.q.lista[1])
 
-	def testaDlistarQuartos(self):
+	def testaDsetSituacao(self):
+		self.q.setSituacao(self.q, 201, 'Livre') |should| equal_to("Quarto não Cadastrado")
+		self.q.setSituacao(self.q, 203, 'Ocupado')
+		self.q.lista[0].situacao |should| equal_to('Ocupado')
+
+	def testaElistarQuartos(self):
 		self.q.listarQuartos(self.q) |should| equal_to([self.q.lista[0], self.q.lista[1]])
 
-	def testaElistarQuartosPorTipo(self):
+	def testaFlistarQuartosPorTipo(self):
 		self.q.listarQuartosPorTipo(self.q, 'Master') |should| equal_to([self.q.lista[0]])
 		self.q.listarQuartosPorTipo(self.q, 'Simples') |should| equal_to([self.q.lista[1]])
 		self.q.listarQuartosPorTipo(self.q, 'Casal') |should| equal_to([])
 
-	def testaElistarQuartosPorTipo(self):
-		self.q.listarQuartosPorSituacao(self.q, 'Livre') |should| equal_to([self.q.lista[0], self.q.lista[1]])
-		self.q.lista[0].situacao = 'Ocupado'
+	def testaGlistarQuartosPorSituacao(self):
+		self.q.listarQuartosPorSituacao(self.q, 'Livre') |should| equal_to([self.q.lista[1]])
 		self.q.listarQuartosPorSituacao(self.q, 'Ocupado') |should| equal_to([self.q.lista[0]])
 		
 if __name__ == '__main__':
