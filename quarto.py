@@ -20,37 +20,40 @@ class Quarto(object):
 	def cadQuarto(self, n, t):
 		Quarto.lista.append(Quarto(n, t))
 
-	def listarQuartos(self, q):
-		for i in range(0, len(q.lista)):
-			print q.lista[i]
-
-	def listarQuartosPorTipo(self, q, tp):
-		for i in range(0, len(q.lista)):
-			if tp == q.lista[i].tipo:
-				print q.lista[i]
-
-	def listarQuartosPorSituacao(self, q, situacao):
-		for i in range(0, len(q.lista)):
-			if situacao == q.lista[i].situacao:
-				print q.lista[i]
-
 	def buscarQuarto(self, q, n):
 		existe = False
+		num = 9999
 		for i in range(0, len(q.lista)):
 			if q.lista[i].num == n:
 				existe = True
+				num = i
 		if existe == True:
-			return q.lista[i]
+			return q.lista[num]
 		else:
 			return False
 
-	def existeQuarto(self, q, n, t):
-		existe = False
-		for i in range(0, len(q.lista)):
-			if q.lista[i].num == n:
-				existe = True
-		if existe == True:
-			self.cadQuarto(n, t)
+	def setSituacao(self, q, n, situacao):
+		if self.buscarQuarto(q, n) == False:
+			return "Quarto não Cadastrado"
 		else:
-			print ""
-			print "Quarto ja Cadastrado"
+			self.buscarQuarto(q, n).situacao = situacao
+
+	def listarQuartos(self, q):
+		listaDeQuartos = []
+		for i in range(0, len(q.lista)):
+			listaDeQuartos.append(q.lista[i])
+		return listaDeQuartos
+
+	def listarQuartosPorTipo(self, q, tp):
+		listaDeQuartos = []
+		for i in range(0, len(q.lista)):
+			if tp == q.lista[i].tipo:
+				listaDeQuartos.append(q.lista[i])
+		return listaDeQuartos
+
+	def listarQuartosPorSituacao(self, q, situacao):
+		listaDeQuartos = []
+		for i in range(0, len(q.lista)):
+			if situacao == q.lista[i].situacao:
+				listaDeQuartos.append(q.lista[i])
+		return listaDeQuartos

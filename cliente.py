@@ -2,7 +2,7 @@
 
 class Cliente(object):
 	num = 0	
-	qtdhosp = 0
+	qtdHosp = 0
 	vip = 'N'
 	lista = []
 	def __init__(self, n, c, t):
@@ -13,7 +13,7 @@ class Cliente(object):
 		self.tel = t
 
 	def __repr__(self):
-		return "Codigo: "+str(self.num)+" | Nome: "+str(self.nome)+" | CPF: "+str(self.cpf)+" | Telefone: "+str(self.tel)+" | Hospedagens: "+str(self.qtdhosp)+" | Eh VIP: "+str(self.vip)
+		return "Codigo: "+str(self.num)+" | Nome: "+str(self.nome)+" | CPF: "+str(self.cpf)+" | Telefone: "+str(self.tel)+" | Hospedagens: "+str(self.qtdHosp)+" | Eh VIP: "+str(self.vip)
 
 	def cadCli(self, n, c, t):
 		Cliente.lista.append(Cliente(n, c, t))
@@ -29,6 +29,20 @@ class Cliente(object):
 			return c.lista[num]
 		else:
 			return False
+
+	def setVip(self, c, n):
+		if self.buscarCliente(c, n) == False:
+			return "Cliente Não Cadastrado"
+		else:
+			self.buscarCliente(c, n).vip = 'S'
+
+	def setQtdHosp(self, c, n):
+		if self.buscarCliente(c, n) == False:
+			return "Cliente Não Cadastrado"
+		else:
+			self.buscarCliente(c, n).qtdHosp += 1
+			if self.buscarCliente(c, n).qtdHosp == 5:
+				self.setVip(c, n)
 
 	def listarClientes(self, c):
 		listaDeClientes = []
