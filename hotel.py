@@ -12,81 +12,43 @@ class Hotel(object):
 		self.c = Cliente(None, 0, None)
 		self.q = Quarto(0, None)
 		self.r = Reserva(None, None, None, None)
+		self.h = Hospedagem(None, None, None)
 		op=0
-		while op != 4:
+		while op != 5:
 			print ""
 			print ""
 			print "Hotel LOO-IFF"
 			print ""
-			print "1 - Cadastro"
-			print "2 - Relatorios"
-			print "3 - Cancelamentos"
-			print "4 - Sair"
+			print "1 - Clientes"
+			print "2 - Quartos"
+			print "3 - Reservas"
+			print "4 - Hospedagens"
+			print "5 - Sair"
 			op = input("Digite sua opção: ")
 			if op == 1:
-				self.cadastro()
+				self.menuClientes()
 			if op == 2:
-				self.relatorios()
+				self.menuQuartos()
 			if op == 3:
-				self.cancelamentos()
-
-	def cadastro(self):
-		op=0
-		while op != 5:
-			print ""
-			print ""
-			print "Menu de Cadastros"
-			print ""
-			print "1 - Cliente"
-			print "2 - Quarto"
-			print "3 - Reserva"
-			print "4 - Hospedagem"
-			print "5 - Voltar"
-			op = input("Digite sua opção: ")
-			if op == 1:
-				self.cadCli()
-			if op == 2:
-				self.cadQuarto()
-			if op == 3:
-				self.cadReserva()
-
-	def relatorios(self):
-		op=0
-		while op != 5:
-			print ""
-			print ""
-			print "Menu de Relatorios"
-			print ""
-			print "1 - Cliente"
-			print "2 - Quarto"
-			print "3 - Reserva"
-			print "4 - Hospedagem"
-			print "5 - Voltar"
-			op = input("Digite sua opção: ")
-			if op == 1:
-				self.menuRelCli()
-			if op == 2:
-				self.menuRelQuartos()
-			if op == 3:
-				self.menuRelReservas()
+				self.menuReservas()
 			if op == 4:
-				self.menuRelReservas()
+				self.menuHospedagens()
 
-	def cancelamentos(self):
+	def menuClientes(self):
 		op=0
 		while op != 3:
 			print ""
 			print ""
-			print "Menu de Cancelamentos"
+			print "Menu de Clientes"
 			print ""
-			print "1 - Reserva"
-			print "2 - Hospedagem"
+			print "1 - Cadastrar Cliente"
+			print "2 - Relatórios de Clientes"
 			print "3 - Voltar"
 			op = input("Digite sua opção: ")
 			if op == 1:
-				self.menuCancelarReservas()
+				self.cadCli()
 			if op == 2:
-				self.menuCancelarHospedagens()
+				self.menuRelCli()
 
 	def cadCli(self):
 		print ""
@@ -125,9 +87,25 @@ class Hotel(object):
 		print ""
 		print "Lista de Clientes VIP"
 		print "";
-		for i in range(0, len(self.c.lista)):
+		for i in range(0, len(self.c.listarClientesVip(self.c))):
 			print self.c.listarClientesVip(self.c)[i]
-	
+
+	def menuQuartos(self):
+		op=0
+		while op != 3:
+			print ""
+			print ""
+			print "Menu de Quartos"
+			print ""
+			print "1 - Cadastrar Quarto"
+			print "2 - Relatórios de Quartos"
+			print "3 - Voltar"
+			op = input("Digite sua opção: ")
+			if op == 1:
+				self.cadQuarto()
+			if op == 2:
+				self.menuRelQuartos()
+
 	def cadQuarto(self):
 		tp = 0
 		print ""
@@ -147,7 +125,8 @@ class Hotel(object):
 				tipo = 'Casal'
 			if tp == 3:
 				tipo = 'Master'
-		self.q.cadQuarto(num, tipo)
+		print ""
+		print self.q.cadQuarto(num, tipo)
 
 	def menuRelQuartos(self):
 		op=0
@@ -172,7 +151,8 @@ class Hotel(object):
 		print ""
 		print "Lista de Quartos"
 		print "";
-		self.q.listarQuartos(self.q)
+		for i in range(0, len(self.q.lista)):
+			print self.q.listarQuartos(self.q)[i]
 
 	def relQuartosPorTipo(self):
 		tp = 0
@@ -194,7 +174,8 @@ class Hotel(object):
 		print ""
 		print "Lista de Quartos (Tipo %s)" %tipo
 		print ""
-		self.q.listarQuartosPorTipo(self.q, tipo)
+		for i in range(0, len(self.q.listarQuartosPorTipo(self.q, tipo))):
+			print self.q.listarQuartosPorTipo(self.q, tipo)[i]
 
 	def relQuartosPorSituacao(self):
 		sit = 0
@@ -213,8 +194,29 @@ class Hotel(object):
 		print ""
 		print "Lista de Quartos "+situacao+"s"
 		print ""
-		self.q.listarQuartosPorSituacao(self.q, situacao)
+		for i in range(0, len(self.q.listarQuartosPorSituacao(self.q, situacao))):
+			print self.q.listarQuartosPorSituacao(self.q, situacao)[i]
 
+
+	def menuReservas(self):
+		op=0
+		while op != 4:
+			print ""
+			print ""
+			print "Menu de Reservas"
+			print ""
+			print "1 - Cadastrar Reserva"
+			print "2 - Relatórios de Reservas"
+			print "3 - Cancelamento de Reserva"
+			print "4 - Voltar"
+			op = input("Digite sua opção: ")
+			if op == 1:
+				self.cadReserva()
+			if op == 2:
+				self.menuRelReservas()
+			if op == 3:
+				self.menuCancelarReservas()
+	
 	def cadReserva(self):
 		print ""
 		print ""
@@ -222,15 +224,12 @@ class Hotel(object):
 		print ""
 		nq = input("Nº do Quarto: ")
 		nc = input("Codigo do Cliente: ")
-		diai = input("Dia da Chegada: ")
-		mesi = input("Mes da Chegada: ")
-		anoi = input("Ano da Chegada: ")
-		diaf = input("Dia da Saida: ")
-		mesf = input("Mes da Saida: ")
-		anof = input("Ano da Saida: ")
-		di = date(anoi, mesi, diai)
-		df = date(anof, mesf, diaf)
-		self.r.existeReserva(self.r, self.q, nq, self.c, nc, di, df)
+		chegada = raw_input("Data da Chegada(ddMMaaaa): ")
+		saida = raw_input("Data da Saída(ddMMaaaa): ")
+		di = date(int(chegada[4:8]), int(chegada[2:4]), int(chegada[:2]))
+		df = date(int(saida[4:8]), int(saida[2:4]), int(saida[:2]))
+		print ""
+		print self.r.validarReserva(self.r, self.q, nq, self.c, nc, di, df)
 
 	def menuCancelarReservas(self):
 		print ""
@@ -238,7 +237,7 @@ class Hotel(object):
 		print "Cancelamento de Reservas"
 		print ""
 		nr = input("Nº da Reserva: ")
-		self.r.cancelarReservas(self.r, nr)
+		print self.r.cancelarReserva(self.r, nr)
 
 	def menuRelReservas(self):
 		op=0
@@ -260,21 +259,120 @@ class Hotel(object):
 		print ""
 		print "Lista Geral de Reservas"
 		print ""
-		self.r.listarReservas(self.r)
+		for i in range(0, len(self.r.listarReservas(self.r))):
+			print self.r.listarReservas(self.r)[i]
 
 	def relReservasPorData(self):
 		print ""
 		print "Lista de Reservas por Periodo"
 		print ""
-		diai = input("Dia da Chegada: ")
-		mesi = input("Mes da Chegada: ")
-		anoi = input("Ano da Chegada: ")
-		diaf = input("Dia da Saida: ")
-		mesf = input("Mes da Saida: ")
-		anof = input("Ano da Saida: ")
-		di = date(anoi, mesi, diai)
-		df = date(anof, mesf, diaf)
+		chegada = raw_input("Data da Chegada(ddMMaaaa): ")
+		saida = raw_input("Data da Saída(ddMMaaaa): ")
+		di = date(int(chegada[4:8]), int(chegada[2:4]), int(chegada[:2]))
+		df = date(int(saida[4:8]), int(saida[2:4]), int(saida[:2]))
 		print ""
 		print "Lista de Reservas por Periodo"
 		print ""
-		self.r.listarReservasPorData(self.r, di, df)
+		for i in range(0, len(self.r.listarReservasPorPeriodo(self.r, di, df))):
+			print self.r.listarReservasPorPeriodo(self.r, di, df)[i]
+
+	
+	def menuHospedagens(self):
+		op=0
+		while op != 5:
+			print ""
+			print ""
+			print "Menu de Hospedagens"
+			print ""
+			print "1 - CheckIn"
+			print "2 - CheckOut"
+			print "3 - Relatórios de Hospedagens"
+			print "4 - Cancelamento de Hospedagens"
+			print "5 - Voltar"
+			op = input("Digite sua opção: ")
+			if op == 1:
+				self.checkIn()
+			if op == 2:
+				self.checkOut()
+			if op == 3:
+				self.menuRelHospedagens()
+			if op == 4:
+				self.menuCancelarHospedagens()
+	
+	def checkIn(self):
+		print ""
+		print ""
+		print "CheckIn"
+		print "Quartos Livres"
+		print self.q.listarQuartosPorSituacao(self.q, 'Livre')
+		print ""
+		nq = input("Nº do Quarto: ")
+		nc = input("Codigo do Cliente: ")
+		saida = raw_input("Data da Saída(ddMMaaaa): ")
+		df = date(int(saida[4:8]), int(saida[2:4]), int(saida[:2]))
+		print ""
+		print self.h.validarHospedagem(self.h, self.r, self.q, nq, self.c, nc, df)
+
+	def checkOut(self):
+		print ""
+		print ""
+		print "CheckOut"
+		print "Hospedagens Em Aberto"
+		print self.h.listarHospedagensPorSituacao(self.h, 'Em Aberto')
+		print ""
+		n = input("Nº da Hospedagem: ")
+		vf = input("Valor Gasto no Frigobar: ")
+		print ""
+		print self.h.checkOut(self.h, n, self.q, vf)
+
+	def menuCancelarHospedagens(self):
+		print ""
+		print ""
+		print "Cancelamento de Hospedagem"
+		print ""
+		n = input("Nº da Hospedagem: ")
+		print self.h.cancelarReserva(self.h, n)
+
+	def menuRelHospedagens(self):
+		op=0
+		while op != 3:
+			print ""
+			print ""
+			print "Relatorios de Hospedagens"
+			print "";
+			print "1 - Lista Geral de Hospedagens"
+			print "2 - Lista de Reservas por Situacao"
+			print "3 - Voltar";
+			op = input("Digite sua opção: ")
+			if op == 1:
+				self.relHospedagens()
+			if op == 2:
+				self.relHospedagensPorSituacao()
+
+	def relHospedagens(self):
+		print ""
+		print "Lista Geral de Hospedagens"
+		print ""
+		for i in range(0, len(self.h.listarHospedagens(self.h))):
+			print self.h.listarHospedagens(self.h)[i]
+
+	def relHospedagensPorSituacao(self):
+		sit = 0
+		print ""
+		print "Lista de Hospedagens por Status"
+		print ""
+		while sit != 1 and sit != 2:
+			print "Status:"
+			print "1 - Em Aberto"
+			print "2 - Encerrado"
+			sit = input("Livre ou Ocupado? ")
+			if sit == 1:
+				situacao = 'Em Aberto'
+			if sit == 2:
+				situacao = 'Encerrada'
+		print ""
+		print "Lista de Hoespedagens "+situacao
+		print ""
+		for i in range(0, len(self.h.listarHospedagensPorSituacao(self.h, situacao))):
+			print self.h.listarHospedagensPorSituacao(self.h, situacao)[i]
+
